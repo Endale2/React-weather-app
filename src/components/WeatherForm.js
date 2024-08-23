@@ -33,11 +33,15 @@ const WeatherForm = () => {
 
         if (insertError) {
           console.error('Error inserting data:', insertError);
+          setError('Failed to save weather data.');
+        } else {
+          console.log('Data successfully inserted:', insertedData);
         }
       } else {
         setError(data.message);
       }
     } catch (err) {
+      console.error('An error occurred while fetching the weather:', err);
       setError('An error occurred while fetching the weather.');
     } finally {
       setLoading(false);

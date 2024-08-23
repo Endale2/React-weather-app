@@ -45,23 +45,26 @@ const WeatherForm = () => {
   };
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <Title level={2}>Weather Dashboard</Title>
-      <Input
-        placeholder="Enter city name"
-        value={city}
-        onChange={(e) => setCity(e.target.value)}
-        style={{ width: '200px', marginRight: '10px' }}
-      />
-      <Button type="primary" onClick={handleSubmit} loading={loading}>
-        Get Weather
-      </Button>
+      <div style={{ display: 'flex', marginBottom: '20px', width: '100%', maxWidth: '400px' }}>
+        <Input
+          placeholder="Enter city name"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          style={{ flexGrow: 1, marginRight: '10px' }}
+        />
+        <Button type="primary" onClick={handleSubmit} loading={loading}>
+          Get Weather
+        </Button>
+      </div>
       {loading && <Spin />}
       {error && <div style={{ color: 'red' }}>{error}</div>}
       {weather && (
         <Card
           title={`Weather in ${weather.name}`}
-          cover={<img alt="weather icon" src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}.png`} />}
+          cover={<img alt="weather icon" src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}.png`} style={{ width: '100px', height: '100px', margin: '0 auto' }} />}
+          style={{ width: '100%', maxWidth: '400px', textAlign: 'center' }}
         >
           <p>Temperature: {weather.main.temp} °C</p>
           <p>Humidity: {weather.main.humidity}%</p>

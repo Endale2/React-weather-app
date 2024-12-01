@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Input, Button, Card, Typography, Spin } from 'antd';
-import { fetchWeather } from '../api/Weather';
-import { supabase } from '../supabaseClient';
+import { Input, Button, Card, Typography, Spin, Row, Col, Divider } from 'antd';
+import { fetchWeather } from '../api/Weather'; // Assuming you already have a function to fetch weather data
 
 const { Title } = Typography;
 
@@ -19,24 +18,6 @@ const WeatherForm = () => {
       const data = await fetchWeather(city);
       if (data.cod === 200) {
         setWeather(data);
-        // Insert weather data into Supabase
-        const { data: insertedData, error: insertError } = await supabase
-          .from('weather')
-          .insert([
-            { 
-              city: city, 
-              temperature: data.main.temp, 
-              humidity: data.main.humidity, 
-              weather: data.weather[0].description 
-            }
-          ]);
-
-        if (insertError) {
-          console.error('Error inserting data:', insertError);
-          setError('Failed to save weather data.');
-        } else {
-          console.log('Data successfully inserted:', insertedData);
-        }
       } else {
         setError(data.message);
       }
@@ -70,8 +51,18 @@ const WeatherForm = () => {
           cover={<img alt="weather icon" src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}.png`} style={{ width: '100px', height: '100px', margin: '0 auto' }} />}
           style={{ width: '100%', maxWidth: '400px', textAlign: 'center' }}
         >
-          <p>Temperature: {weather.main.temp} °C</p>
-          <p>Humidity: {weather.main.humidity}%</p>
+          <Row gutter={16}>
+            <Col span={12}>
+              <p>Temperature: {weather.main.temp} °C</p>
+              <p>Humidity: {weather.main.humidity}%</p>
+            </Col>
+            <Col span={12}>
+              <p>Wind Speed: {weather.wind.speed} m/s</p>
+              <p>Pressure: {weather.main.pressure} hPa</p>
+            </Col>
+          </Row>
+          <Divider />
+          <p><strong>Description:</strong> {weather.weather[0].description}</p>
         </Card>
       )}
     </div>

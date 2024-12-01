@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Input, Button, Card, Typography, Spin, Row, Col, Divider, Space } from 'antd';
-import { fetchWeather } from '../api/Weather'; // Assuming you already have a function to fetch weather data
+import { fetchWeather } from '../api/Weather'; 
 
 const { Title, Text } = Typography;
 
@@ -10,9 +10,9 @@ const WeatherForm = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Fetch weather data for Addis Ababa by default on component mount
+  
   useEffect(() => {
-    handleSubmit(); // Automatically fetch weather for Addis Ababa on initial render
+    handleSubmit(); 
   }, []);
 
   const handleSubmit = async () => {
